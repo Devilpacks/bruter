@@ -11,15 +11,4 @@ export class MnemonicProvider {
         })
         return phrase.join(' ')
     }
-    getNextIndex(indexArray: number[]) {
-        // between 0 and 2047
-        const copy = indexArray
-        for (let i = 0; i < indexArray.length; i++) {
-            const element = indexArray[i];
-            if (element<2047) {
-                copy[i]=element+1
-                return copy
-            }
-        }
-    }
 }

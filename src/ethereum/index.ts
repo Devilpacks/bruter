@@ -33,7 +33,9 @@ export class EthereumProvider {
             id: this.getRequestId()
         };
         const response = await this.postRequest(body);
-        return this.fromHex(response.result)
+        if (response) {
+            return this.fromHex(response.result)
+        }
     }
     async getTokenBalanceByAddress(address: string, contract : string): Promise<BigNumber> {
         const call = this.prepareCall(address,'balanceOf(address)')
@@ -92,8 +94,7 @@ export class EthereumProvider {
             )
             return response.data
         } catch (error) {
-            console.error(JSON.stringify(error)); 
-            throw new Error(error);
+            console.error(JSON.stringify(error));
         }
     }
     private getRequestId() {

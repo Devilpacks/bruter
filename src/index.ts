@@ -44,7 +44,7 @@ async function bootstrap() {
             console.log(JSON.stringify(currentCombination));
         }
     } catch (error) {
-        console.log(phase);
+        console.log(currentCombination);
         console.log(error);
     }
 }
