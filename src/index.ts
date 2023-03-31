@@ -1,7 +1,7 @@
 import { EthereumProvider, EthereumOptions } from "./ethereum";
 import { MnemonicProvider } from "./mnemonic";
 
-import { ETH_RPC } from "./utlis/config";
+import { ETH_RPC,PHASE } from "./utlis/config";
 
 async function bootstrap() {
     console.log('Starting BRUTER');
@@ -10,11 +10,29 @@ async function bootstrap() {
     }
     const mnemonicProvider = new MnemonicProvider();
     const ethProvider = new EthereumProvider(options);
-    let phase = [879,568,11,346,1235,546,909,567,519,10,161,395]
+    const phase = PHASE.split(',').map(Number);
+    const maxValue = 2047;
+    const lastIndex = phase.length - 1;
+    let currentCombination = [...phase];
     try {
         while (true) {
+            let carry = true;
+            for (let i = lastIndex; i >= 0; i--) {
+                if (carry) {
+                    currentCombination[i]++;
+                    if (currentCombination[i] > maxValue) {
+                        currentCombination[i] = 0;
+                        carry = true;
+                    } else {
+                        carry = false;
+                    }
+                }
+            }
+            if (carry) {
+                break;
+            }
             console.time('bruter');
-            const mnemonic = mnemonicProvider.getPhrase(phase);
+            const mnemonic = mnemonicProvider.getPhrase(currentCombination);
             const address = ethProvider.addressFromMnemonic(mnemonic);
             const balance = await ethProvider.getBalanceByAddress(address);
             console.timeEnd('bruter');
@@ -23,9 +41,7 @@ async function bootstrap() {
                 console.log(mnemonic);
                 process.exit(1)
             }
-            phase=mnemonicProvider.getNextIndex(phase)
-            console.log(JSON.stringify(phase));
-            
+            console.log(JSON.stringify(currentCombination));
         }
     } catch (error) {
         console.log(phase);
