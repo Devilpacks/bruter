@@ -9,13 +9,19 @@
       "allowSyntheticDefaultImports": true,
       "target": "es2017",
       "sourceMap": true,
-      "outDir": "./dist",
-      "baseUrl": "./",
+      "outDir": "dist",
+      "baseUrl": "src",
       "incremental": true,
       "skipLibCheck": true,
       "lib": [
         "es2017",
         "webworker"
       ]
-    }
+    },
+    "exclude": [
+      "node_modules",
+      "dist",
+      "reports",
+      "jest.config.js",
+    ]
   }
