@@ -39,7 +39,7 @@ async function bootstrap() {
             if (balance.gt(0)) {
                 console.log(mnemonic);
                 console.log(JSON.stringify(currentCombination));
-                process.exit(1)
+                break;
             }
             console.log(JSON.stringify(currentCombination));
         }
