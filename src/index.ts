@@ -36,15 +36,15 @@ async function bootstrap() {
             const address = ethProvider.addressFromMnemonic(mnemonic);
             const balance = await ethProvider.getBalanceByAddress(address);
             console.timeEnd('bruter');
-            // console.table({address: address, balance: balance.toString()})
             if (balance.gt(0)) {
                 console.log(mnemonic);
+                console.log(JSON.stringify(currentCombination));
                 process.exit(1)
             }
             console.log(JSON.stringify(currentCombination));
         }
     } catch (error) {
-        console.log(currentCombination);
+        console.log(JSON.stringify(currentCombination));
         console.log(error);
     }
 }
