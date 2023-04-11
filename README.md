@@ -1,4 +1,4 @@
-# bruter
+# bruter(wrong method)
 ## Prepare
 Create *.env* file with:
 ```

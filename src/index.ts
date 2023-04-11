@@ -80,7 +80,7 @@ async function address() {
             console.time('bruter');
             const mnemonic = mnemonicProvider.getPhrase(currentCombination);
             const address = ethProvider.addressFromMnemonic(mnemonic);
-            const valid = address.startsWith('0x0000000')
+            const valid = address.startsWith('0x0000000') || address.endsWith('aaaaaa')
             console.timeEnd('bruter');
             if (valid) {
                 console.log(mnemonic);
@@ -88,7 +88,7 @@ async function address() {
                 console.log(JSON.stringify(currentCombination));
                 break;
             }
-            console.log(JSON.stringify(currentCombination));
+            console.log(JSON.stringify(currentCombination),`| ${address}`);
         }
     } catch (error) {
         console.log(JSON.stringify(currentCombination));
